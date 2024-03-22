@@ -9,23 +9,18 @@ export async function generateMetadata({
     params: { fname: string };
 }) {
     const { fname } = params;
-    console.log(fname);
+    console.log('fname', fname);
     const url = new URL(
         "/" + fname.toString() + "/frame",
-        process.env.VERCEL_URL || "http://localhost:3000"
+        appConfig.host || "http://localhost:3000"
     );
-    console.log(url);
-    const meta = await fetchMetadata(url);
-    console.log(meta);
+    console.log('url', url);
     return {
         title: "ocvc",
         // provide full URL to your /frames endpoint
         other: {
             ...(await fetchMetadata(
-                new URL(
-                    "/" + fname + "/frame",
-                    process.env.VERCEL_URL || "http://localhost:3000"
-                )
+              url
             )),
         },
     };
