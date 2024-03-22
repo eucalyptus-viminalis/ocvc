@@ -1,7 +1,7 @@
 import { ImageResponse } from '@vercel/og'
 import { NextRequest } from "next/server";
-import FrameDiv from "../../FrameDiv";
-import TopBar from "../../TopBar";
+import FrameDiv from "../../../FrameDiv";
+import TopBar from "../../../TopBar";
 
 export const runtime = "edge";
 
