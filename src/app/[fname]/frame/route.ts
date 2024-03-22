@@ -39,9 +39,6 @@ const handleRequest = frames(async (ctx) => {
         // kind: ,
         // location,
         accepts: [{
-            id: 'farcaster',
-            version: 'vNext'
-        },{
             id: 'xmtp',
             version: 'vNext'
         }],
