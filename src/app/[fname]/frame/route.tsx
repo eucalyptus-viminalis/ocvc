@@ -1,5 +1,5 @@
 /* eslint-disable react/jsx-key */
-import { Frame, getFrameHtml } from 'frames.js';
+import { Frame, FrameActionPayload, getFrameHtml } from 'frames.js';
 import {Button} from 'frames.js/core'
 import { createFrames } from "frames.js/next";
 import { NextRequest } from 'next/server';
@@ -33,6 +33,15 @@ export async function GET(
         title: fname + ' | ocvc*',
     })
     return new Response(html, {headers:{'content-type':'text/html'}});
+}
+
+export async function POST(req:NextRequest) {
+    const data: FrameActionPayload = await req.json()
+    // route request
+    if (data.untrustedData.buttonIndex == 1) {
+        const res = await fetch(req.nextUrl)
+        return new Response(res.body, {headers:{'content-type':'text/html'}})
+    }
 }
 
 // const frames = createFrames()
