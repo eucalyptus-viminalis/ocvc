@@ -44,6 +44,7 @@ const handleRequest = frames(async (ctx) => {
         }],
         // then,
         buttons: [
+            <Button action="post">refresh</Button>
         ],
         // headers: '',
         // imageOptions: {
