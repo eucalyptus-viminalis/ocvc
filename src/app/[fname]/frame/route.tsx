@@ -3,16 +3,17 @@ import { Frame, FrameActionPayload, getFrameHtml } from 'frames.js';
 import {Button} from 'frames.js/core'
 import { createFrames } from "frames.js/next";
 import { NextRequest } from 'next/server';
+import { appConfig } from '../../appConfig';
 
 export async function GET(
     req: NextRequest,
     { params }: { params: { fname: string } }
 ) {
     const fname = params.fname;
-    const image = req.nextUrl.toString() + '/image'
+    const image = appConfig.host + '/' + fname + '/frame/image'
     const frame: Frame = {
         image,
-        postUrl: req.nextUrl.toString(),
+        postUrl: appConfig.host + '/' + fname + '/frame',
         version: 'vNext',
         accepts: [{
             id: 'xmtp',
