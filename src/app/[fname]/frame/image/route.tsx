@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     return new ImageResponse(
         (
             <FrameDiv>
-                <TopBar opacity={0.5} route={req.nextUrl.pathname.split("/").at(-2)}>
+                <TopBar opacity={0.5} route={req.nextUrl.pathname.split("/").at(-3)}>
                 </TopBar>
                 <div
                     id="mid-section"
