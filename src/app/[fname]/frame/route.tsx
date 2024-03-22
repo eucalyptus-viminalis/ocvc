@@ -1,7 +1,6 @@
-import { Frame, getFrameHtml } from "frames.js";
+/* eslint-disable react/jsx-key */
 import {Button} from 'frames.js/core'
 import { createFrames } from "frames.js/next";
-import { NextRequest } from "next/server";
 
 // export async function GET(
 //     req: NextRequest,
@@ -46,7 +45,7 @@ const handleRequest = frames(async (ctx) => {
         buttons: [
             <Button action="post">refresh</Button>
         ],
-        // headers: '',
+        // headers: ,
         // imageOptions: {
 
         // },
