@@ -9,8 +9,11 @@ export async function GET(
     req: NextRequest,
     { params }: { params: { fname: string } }
 ) {
+    const imageParams = new URLSearchParams()
+    // TODO: cache bust remove later
+    imageParams.set('date', Date.now().toString())
     const fname = params.fname;
-    const image = appConfig.host + '/' + fname + '/frame/image'
+    const image = appConfig.host + '/' + fname + '/frame/image?' + imageParams
     const frame: Frame = {
         image,
         postUrl: appConfig.host + '/' + fname + '/frame',
