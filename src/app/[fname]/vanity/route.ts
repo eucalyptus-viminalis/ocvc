@@ -9,15 +9,15 @@ export async function GET(
 ) {
     const fnameSlug = params.fname;
     const data = await getData(fnameSlug)
-    const {fname,ens,} = data
+    const {hasOpepen,pfp,} = data
     const imageParams = new URLSearchParams()
 
-    imageParams.set('fname', fname)
-    imageParams.set('ens', ens ? ens : '')
-    const image = appConfig.host + '/' + fnameSlug + '/identity/image?' + imageParams
+    imageParams.set('pfp', pfp)
+    imageParams.set('hasOpepen', hasOpepen ? 'true' : '')
+    const image = appConfig.host + '/' + fnameSlug + '/vanity/image?' + imageParams
     const frame: Frame = {
         image,
-        postUrl: appConfig.host + '/' + fnameSlug + '/identity',
+        postUrl: appConfig.host + '/' + fnameSlug + '/vanity',
         version: 'vNext',
         // accepts: [],
         buttons: [
@@ -41,10 +41,10 @@ export async function POST(
     const data: FrameActionPayload = await req.json()
     // route request
     if (data.untrustedData.buttonIndex == 1) {
-        const res = await fetch(appConfig.host + '/' + fname + '/frame')
+        const res = await fetch(appConfig.host + '/' + fname + '/identity')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     } else if (data.untrustedData.buttonIndex == 2) {
-        const res = await fetch(appConfig.host + '/' + fname + '/vanity')
+        const res = await fetch(appConfig.host + '/' + fname + '/status')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     }
 }

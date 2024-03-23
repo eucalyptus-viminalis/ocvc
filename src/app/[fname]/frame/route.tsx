@@ -39,11 +39,20 @@ export async function GET(
     return new Response(html, {headers:{'content-type':'text/html'}});
 }
 
-export async function POST(req:NextRequest) {
+export async function POST(
+    req:NextRequest,
+    {params}: {params: {fname: string}}
+) {
+    const {fname} = params
+
     const data: FrameActionPayload = await req.json()
+
     // route request
     if (data.untrustedData.buttonIndex == 1) {
         const res = await fetch(req.nextUrl)
+        return new Response(res.body, {headers:{'content-type':'text/html'}})
+    } else if (data.untrustedData.buttonIndex == 2) {
+        const res = await fetch(appConfig.host + '/' + fname + '/identity')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     }
 }
