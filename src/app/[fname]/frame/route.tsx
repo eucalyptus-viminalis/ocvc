@@ -23,7 +23,8 @@ export async function GET(
             version: 'vNext'
         }],
         buttons: [
-            {action:'post',label:'refresh'}
+            {action:'post',label:'refresh'},
+            {action: 'post', label: 'check vibe>'}
         ],
         imageAspectRatio: '1.91:1',
         // inputText,
