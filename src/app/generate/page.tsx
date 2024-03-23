@@ -17,9 +17,9 @@ export default function GeneratePage() {
             <h2 className="text-2xl">Identity</h2>
             <p>Logged in as: {user?.farcaster?.username}</p>
             <p>Select your name:</p>
-            {fid ? (
+            {ready && fid ? (
                 <div>
-                    {/* <Suspense fallback={<div>Loading...</div>}>
+                    <Suspense fallback={<div>Loading...</div>}>
                         <Identity fid={fid} />
                     </Suspense>
                     <Suspense fallback={<div>Loading...</div>}>
@@ -27,7 +27,7 @@ export default function GeneratePage() {
                     </Suspense>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Taste fid={fid} />
-                    </Suspense> */}
+                    </Suspense>
                     <Suspense fallback={<div>Loading...</div>}>
                         <Vanity fid={fid} />
                     </Suspense>
