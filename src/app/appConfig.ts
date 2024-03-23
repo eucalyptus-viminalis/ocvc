@@ -1,6 +1,9 @@
 const THE_GRAPH = "https://gateway-arbitrum.network.thegraph.com/api/";
 
 export const appConfig = {
+    privyAppID: process.env.NEXT_PUBLIC_PRIVY_APP_ID!,
+    airstackApiKey: process.env.AIRSTACK_API_KEY!,
+    neynarApiKey: process.env.NEYNAR_API_KEY!,
     host: process.env.HOST!,
     theGraph: {
         eth721subgraph:
