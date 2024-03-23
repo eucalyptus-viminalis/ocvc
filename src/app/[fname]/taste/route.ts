@@ -45,7 +45,7 @@ export async function POST(
         const res = await fetch(appConfig.host + '/' + fname + '/status')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     } else if (data.untrustedData.buttonIndex == 2) {
-        const res = await fetch(appConfig.host + '/' + fname + '/pride')
+        const res = await fetch(appConfig.host + '/' + fname + '/supporters')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     }
 }
