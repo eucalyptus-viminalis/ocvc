@@ -24,7 +24,6 @@ export async function GET(
         // accepts: [],
         buttons: [
             {action: 'post', label: '<'},
-            {action: 'post', label: '>'},
         ],
         imageAspectRatio: '1.91:1',
         // inputText,
