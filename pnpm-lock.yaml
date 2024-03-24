@@ -14,6 +14,9 @@ dependencies:
   '@privy-io/react-auth':
     specifier: ^1.59.5
     version: 1.59.5(@babel/core@7.24.3)(@types/react@18.2.69)(react-dom@18.2.0)(react-is@16.13.1)(react@18.2.0)(typescript@5.4.3)
+  '@tanstack/react-query':
+    specifier: ^5.28.6
+    version: 5.28.6(react@18.2.0)
   '@vercel/og':
     specifier: ^0.6.2
     version: 0.6.2
@@ -1652,6 +1655,19 @@ packages:
     resolution: {integrity: sha512-E4KcWTpoLHqwPHLxidpOqQbcrZVgi0rsmmZXUle1jXmJfuIf/UWpczUJ7MZZ5tlxytgJXyp0w4PGkkeLiuIdZw==}
     dependencies:
       tslib: 2.6.2
+    dev: false
+
+  /@tanstack/query-core@5.28.6:
+    resolution: {integrity: sha512-hnhotV+DnQtvtR3jPvbQMPNMW4KEK0J4k7c609zJ8muiNknm+yoDyMHmxTWM5ZnlZpsz0zOxYFr+mzRJNHWJsA==}
+    dev: false
+
+  /@tanstack/react-query@5.28.6(react@18.2.0):
+    resolution: {integrity: sha512-/DdYuDBSsA21Qbcder1R8Cr/3Nx0ZnA2lgtqKsLMvov8wL4+g0HBz/gWYZPlIsof7iyfQafyhg4wUVUsS3vWZw==}
+    peerDependencies:
+      react: ^18.0.0
+    dependencies:
+      '@tanstack/query-core': 5.28.6
+      react: 18.2.0
     dev: false
 
   /@tanstack/react-virtual@3.2.0(react-dom@18.2.0)(react@18.2.0):
