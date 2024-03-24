@@ -38,7 +38,7 @@ export default function Generate() {
                 Generate!
             </button>
             {generating ? (
-                <div className="flex flex-col border w-3/4 h-3/4">
+                <div className="gap-6 items-center fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
                     {fid ? (
                         <div className="flex flex-col">
                             <span>your vibe check is ready!</span>
@@ -49,23 +49,13 @@ export default function Generate() {
                                 Go to my vibe check
                             </Link>
                         </div>
-                    ) : generationFailed ? (
-                        <div className="flex flex-col">
-                            <span>Unable to generate your vibe check.</span>
-                            <button
-                                className="border p-2 px-8 hover:opacity-70"
-                                onClick={() => setGenerationFailed(false)}
-                            >
-                                OK
-                            </button>
-                        </div>
                     ) : (
                         <span>Generating... </span>
                     )}
                 </div>
             ) : null}
             {generationFailed ? (
-                <div className="gap-6 fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
+                <div className="gap-6 items-center fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
                     <span>Unable to generate your vibe check.</span>
                     {identity.fid ? (
                         <div className="flex w-full align-middle items-center justify-center flex-col gap-4">
@@ -81,7 +71,7 @@ export default function Generate() {
                         </div>
                     ) : null}
                     <button
-                        className="border max-w-36 p-2 px-8 hover:opacity-70"
+                        className="border w-fit p-2 px-8 hover:opacity-70"
                         onClick={() => setGenerationFailed(false)}
                     >
                         OK
