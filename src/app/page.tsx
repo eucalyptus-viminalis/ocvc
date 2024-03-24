@@ -3,17 +3,27 @@ import Link from "next/link";
 import Login from "./Login";
 import { usePrivy } from "@privy-io/react-auth";
 import LatestChecks from "./LatestChecks";
-import { Suspense } from "react";
+import { Suspense, useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import MainButtons from "./MainButtons";
 
 export default function Home() {
   // const checks = getData()
-  const {ready, authenticated} = usePrivy()
+  const {ready, authenticated, user} = usePrivy()
+    const [fidLoggedIn, setFidLoggedIn] = useState<number|null>()
+
+    useEffect(() => {
+        if (ready && authenticated) {
+            setFidLoggedIn(user?.farcaster?.fid);
+        }
+    }, [user, ready, authenticated]);
   return (
     <>
         <h1 className="text-9xl">OCVC*</h1>
         <span>onchain vibe check*</span>
-        {ready && authenticated ? (
-          <Link className="text-5xl border hover:opacity-80 p-4" href={'generate'}>Start!</Link>
+
+        {fidLoggedIn ? (
+          <MainButtons fid={fidLoggedIn}/>
         ) : 
         (
           <Login/>

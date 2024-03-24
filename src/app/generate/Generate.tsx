@@ -7,8 +7,8 @@ import Link from "next/link";
 
 export default function Generate() {
     const context = useContext(GlobalContext);
-    const [generating, setGenerating] = useState(false);
     const [fid, setFid] = useState<number>();
+    const [generating, setGenerating] = useState(false);
     const [generationFailed, setGenerationFailed] = useState<boolean>();
     const { identity, status, taste, vanity } = context;
     const generate = async () => {
