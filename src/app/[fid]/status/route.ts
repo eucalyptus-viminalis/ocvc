@@ -5,49 +5,96 @@ import { appConfig } from "../../appConfig";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { fname: string } }
+    { params }: { params: { fid: string } }
 ) {
-    const fnameSlug = params.fname;
-    const data = await getData(fnameSlug)
-    const {fcFollowerCount,firstTxOnBase,firstTxOnEth,totalSuperchainBalance,} = data
-    const imageParams = new URLSearchParams()
+    const fidSlug = params.fid;
+    const data = await getData(+fidSlug);
+    if (!data)
+        return new Response("no status data found for fid: " + fidSlug, {
+            status: 500,
+        });
+    const {
+        fcEngagementScore_percentile,
+        fcEngagementScore_rank,
+        fcEngagementScore_score,
+        fcFollowerCount,
+        fcFollowingScore_percentile,
+        fcFollowingScore_rank,
+        fcFollowingScore_score,
+        fid,
+        firstTxOnBase_timestamp,
+        firstTxOnBase_txHash,
+        firstTxOnEth_timestamp,
+        firstTxOnEth_txHash,
+        totalSuperchainBalance,
+    } = data;
+    const imageParams = new URLSearchParams();
+    imageParams.set('fid', fid.toString())
+    if (firstTxOnBase_txHash) {
+        imageParams.set('firstTxOnBase', [
+            firstTxOnBase_timestamp,
+            firstTxOnBase_txHash
+        ].join(','))
+    }
+    if (firstTxOnEth_txHash) {
+        imageParams.set('firstTxOnEth', [
+            firstTxOnEth_timestamp,
+            firstTxOnEth_txHash
+        ].join(','))
+    }
+    if (fcEngagementScore_rank) {
+        imageParams.set('fcEngagementScore', [
+            fcEngagementScore_percentile!.toString(),
+            fcEngagementScore_rank.toString(),
+            fcEngagementScore_score!.toString()
+        ].join(','))
+    }
+    if (fcFollowingScore_rank) {
+        imageParams.set('fcFollowingScore', [
+            fcFollowingScore_percentile!.toString(),
+            fcFollowingScore_rank.toString(),
+            fcFollowingScore_score!.toString()
+        ].join(','))
+    }
+    imageParams.set("fcFollowerCount", fcFollowerCount?.toString() ?? "");
+    imageParams.set("totalSuperchainBalance", totalSuperchainBalance ?? "");
 
-    imageParams.set('fcFollowerCount', fcFollowerCount?.toString() ?? '')
-    imageParams.set('firstTxOnBaseTimestamp', firstTxOnBase?.timestamp.toString() ?? '')
-    imageParams.set('firstTxOnEthTimestamp', firstTxOnEth?.timestamp.toString() ?? '')
-    imageParams.set('totalSuperchainBalance', totalSuperchainBalance ?? '')
-
-    const image = appConfig.host + '/' + fnameSlug + '/status/image?' + imageParams
+    const image =
+        appConfig.host + "/" + fidSlug + "/status/image?" + imageParams;
     const frame: Frame = {
         image,
-        postUrl: appConfig.host + '/' + fnameSlug + '/status',
-        version: 'vNext',
+        postUrl: appConfig.host + "/" + fidSlug + "/status",
+        version: "vNext",
         // accepts: [],
         buttons: [
-            {action: 'post', label: '<'},
-            {action: 'post', label: '>'},
+            { action: "post", label: "<" },
+            { action: "post", label: ">" },
         ],
-        imageAspectRatio: '1.91:1',
+        imageAspectRatio: "1.91:1",
         // inputText,
         ogImage: image,
         // state,
-    }
-    const html = getFrameHtml(frame)
-    return new Response(html, {headers:{'content-type':'text/html'}})
+    };
+    const html = getFrameHtml(frame);
+    return new Response(html, { headers: { "content-type": "text/html" } });
 }
 
 export async function POST(
-    req:NextRequest,
-    {params}: {params: {fname: string}}
+    req: NextRequest,
+    { params }: { params: { fid: string } }
 ) {
-    const {fname} = params
-    const data: FrameActionPayload = await req.json()
+    const { fid } = params;
+    const data: FrameActionPayload = await req.json();
     // route request
     if (data.untrustedData.buttonIndex == 1) {
-        const res = await fetch(appConfig.host + '/' + fname + '/vanity')
-        return new Response(res.body, {headers:{'content-type':'text/html'}})
+        const res = await fetch(appConfig.host + "/" + fid + "/vanity");
+        return new Response(res.body, {
+            headers: { "content-type": "text/html" },
+        });
     } else if (data.untrustedData.buttonIndex == 2) {
-        const res = await fetch(appConfig.host + '/' + fname + '/taste')
-        return new Response(res.body, {headers:{'content-type':'text/html'}})
+        const res = await fetch(appConfig.host + "/" + fid + "/taste");
+        return new Response(res.body, {
+            headers: { "content-type": "text/html" },
+        });
     }
 }

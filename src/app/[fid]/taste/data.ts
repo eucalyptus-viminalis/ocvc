@@ -1,18 +1,30 @@
+import { prisma } from "@/prisma/client"
 import { appConfig } from "../../appConfig"
 
 type TasteData = {
     imageUrls: string[]
 }
 
-export async function getData(fname: string) {
-    const dummyData: TasteData = {
-        imageUrls: [
-            'https://i.seadn.io/s/raw/files/21896b30f4747de609cb2e905780896f.jpg?auto=format&dpr=1&w=1000',
-            'https://raw.seadn.io/files/e75adc828df624e0d745f1df4ee8542c.svg',
-            'https://i.seadn.io/s/raw/files/d0bef94c8ece8b107648cec93b342e22.gif?auto=format&dpr=1&w=1000'
-        ],
-    }
-    return dummyData
+export async function getData(fid: number) {
+    const data = await prisma.tasteModel.findFirst({
+        where: {
+            fid: {
+                equals: fid
+            }
+        },
+        include: {
+            tokenTransfers: true
+        }
+    })
+    return data
+    // const dummyData: TasteData = {
+    //     imageUrls: [
+    //         'https://i.seadn.io/s/raw/files/21896b30f4747de609cb2e905780896f.jpg?auto=format&dpr=1&w=1000',
+    //         'https://raw.seadn.io/files/e75adc828df624e0d745f1df4ee8542c.svg',
+    //         'https://i.seadn.io/s/raw/files/d0bef94c8ece8b107648cec93b342e22.gif?auto=format&dpr=1&w=1000'
+    //     ],
+    // }
+    // return dummyData
 }
 
 // FIXME: Testing out 1155 Tracker Base subgraph for latest transfers

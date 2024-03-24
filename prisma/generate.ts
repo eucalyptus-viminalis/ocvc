@@ -19,6 +19,8 @@ export async function generateVibeChceck(props: generateVibeCheckProps) {
         prisma.identityModel.create({
             data: {
                 fid: identity.fid!,
+                fname: identity.fname!,
+                eth_addresses: identity.eth_addresses
             },
         }),
         prisma.statusModel.create({

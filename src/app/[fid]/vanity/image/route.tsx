@@ -1,4 +1,4 @@
-import { ImageResponse } from '@vercel/og'
+import { ImageResponse } from "@vercel/og";
 import { NextRequest } from "next/server";
 import FrameDiv from "../../../FrameDiv";
 import TopBar from "../../../TopBar";
@@ -6,9 +6,10 @@ import TopBar from "../../../TopBar";
 export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
-
-    const pfp = decodeURIComponent(req.nextUrl.searchParams.get('pfp')!)
-    const hasOpepen = req.nextUrl.searchParams.get('hasOpepen')
+    const pfp = req.nextUrl.searchParams.get("pfp");
+    const hasOpepen = req.nextUrl.searchParams.get("hasOpepen");
+    const ensNamesEncoded = req.nextUrl.searchParams.get("ensNames");
+    const ensNames = ensNamesEncoded ? ensNamesEncoded.split(",") : [];
 
     // Fonts
     const regular = await fetch(
@@ -24,15 +25,17 @@ export async function GET(req: NextRequest) {
     return new ImageResponse(
         (
             <FrameDiv>
-                <TopBar opacity={0.5} route={req.nextUrl.pathname.split("/").at(-2)}>
-                </TopBar>
+                <TopBar
+                    opacity={0.5}
+                    route={req.nextUrl.pathname.split("/").at(-2)}
+                ></TopBar>
                 <div
                     id="mid-section"
                     style={{
                         display: "flex",
-                        flexDirection: "column",
+                        flexDirection: "row",
                         padding: 20,
-                        gap: 16,
+                        gap: 50,
                         height: "70%",
                         alignItems: "center",
                         justifyContent: "center",
@@ -40,16 +43,32 @@ export async function GET(req: NextRequest) {
                         fontFamily: "mono",
                     }}
                 >
-                    <img
-                    src={pfp}
-                        alt='pfp' 
-                        width={400}
-                        height={400}
-                        style={{
-                            objectFit: 'fill',
-                            borderRadius: hasOpepen ? '0 200px 200px 200px' : 200
-                        }}
-                    />
+                    {pfp ? (
+                        <img
+                            src={pfp}
+                            alt="pfp"
+                            width={400}
+                            height={400}
+                            style={{
+                                objectFit: "fill",
+                                borderRadius: hasOpepen
+                                    ? "0 200px 200px 200px"
+                                    : 200,
+                            }}
+                        />
+                    ) : null}
+                    {ensNames ? (
+                        <div style={{ display: "flex", width: 600, fontSize: 70 }}>
+                            {ensNames.map((name, i) => {
+                                const key = `ensName${i}`;
+                                return (
+                                    <div style={{ display: "flex" }} key={key}>
+                                        <span>{name}</span>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                    ) : null}
                 </div>
                 <div
                     id="bottom-bar"
@@ -60,7 +79,7 @@ export async function GET(req: NextRequest) {
                         alignItems: "flex-start",
                         width: "100%",
                         fontFamily: "mono",
-                        fontSize: 46
+                        fontSize: 46,
                     }}
                 >
                     <span>{}</span>
@@ -84,7 +103,7 @@ export async function GET(req: NextRequest) {
                     style: "normal",
                 },
             ],
-            headers: {'cache-control':'max-age=0'},
+            headers: { "cache-control": "max-age=0" },
             height: 630,
             // status,
             // statusText,

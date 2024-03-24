@@ -38,7 +38,7 @@ export async function GET(req: NextRequest) {
                         display: "flex",
                         flexDirection: "row",
                         padding: 20,
-                        gap: 16,
+                        gap: 32,
                         height: "70%",
                         alignItems: "center",
                         justifyContent: "center",
@@ -53,10 +53,11 @@ export async function GET(req: NextRequest) {
                         src={imageUrl}
                         key={key}
                         alt={key}
-                        width={400}
-                        height={400}
+                        width={360}
+                        height={420}
                         style={{
-                            objectFit: "contain",
+                            objectFit: "cover",
+                            borderRadius: 16
                         }}
                     />
                         )

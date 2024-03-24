@@ -5,19 +5,24 @@ import { appConfig } from "../../appConfig";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { fname: string } }
+    { params }: { params: { fid: string } }
 ) {
-    const fnameSlug = params.fname;
-    const data = await getData(fnameSlug)
-    const {fname,ens,} = data
+
+    const fidSlug = params.fid;
+    const data = await getData(+fidSlug)
+    if (!data) {
+        return new Response('failed fetching data', {status:500})
+    }
+    const {fid, eth_addresses,fname,} = data
     const imageParams = new URLSearchParams()
 
     imageParams.set('fname', fname)
-    imageParams.set('ens', ens ? ens : '')
-    const image = appConfig.host + '/' + fnameSlug + '/identity/image?' + imageParams
+    imageParams.set('fid', fid.toString())
+    imageParams.set('eth_addresses', eth_addresses.join(','))
+    const image = appConfig.host + '/' + fidSlug + '/identity/image?' + imageParams
     const frame: Frame = {
         image,
-        postUrl: appConfig.host + '/' + fnameSlug + '/identity',
+        postUrl: appConfig.host + '/' + fidSlug + '/identity',
         version: 'vNext',
         // accepts: [],
         buttons: [
@@ -35,16 +40,16 @@ export async function GET(
 
 export async function POST(
     req:NextRequest,
-    {params}: {params: {fname: string}}
+    {params}: {params: {fid: string}}
 ) {
-    const {fname} = params
+    const {fid} = params
     const data: FrameActionPayload = await req.json()
     // route request
     if (data.untrustedData.buttonIndex == 1) {
-        const res = await fetch(appConfig.host + '/' + fname + '/frame')
+        const res = await fetch(appConfig.host + '/' + fid + '/frame')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     } else if (data.untrustedData.buttonIndex == 2) {
-        const res = await fetch(appConfig.host + '/' + fname + '/vanity')
+        const res = await fetch(appConfig.host + '/' + fid + '/vanity')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     }
 }

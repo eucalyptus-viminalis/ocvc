@@ -17,6 +17,18 @@ export async function Identity(props: IdentityProps) {
         queryKey: ["identityData"],
         queryFn: () => getIdentityData(fid),
     });
+    const updateFname = () => {
+        setIdentity((prev) => {
+            if (prev.fname) {
+                return {
+                    ...prev,
+                    fname: undefined,
+                };
+            } else {
+                return { ...prev, fname: data?.fname };
+            }
+        });
+    };
     const updateFid = () => {
         setIdentity((prev) => {
             if (prev.fid) {
@@ -65,6 +77,14 @@ export async function Identity(props: IdentityProps) {
         <div className="flex flex-row gap-10">
             <div className="flex flex-col gap-10 w-1/3">
                 <div
+                    onClick={updateFname}
+                    id="fname"
+                    className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                >
+                    <span>Farcaster Name</span>
+                    <span>{data.fname}</span>
+                </div>
+                <div
                     onClick={updateFid}
                     id="fid"
                     className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
@@ -72,6 +92,7 @@ export async function Identity(props: IdentityProps) {
                     <span>FID</span>
                     <span>{data.fid}</span>
                 </div>
+
                 {data.eth_addresses?.map((ethAddy, i) => {
                     const key = `ethAddy${i}`;
                     return (

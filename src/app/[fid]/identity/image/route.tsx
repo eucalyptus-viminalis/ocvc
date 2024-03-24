@@ -7,8 +7,13 @@ export const runtime = "edge";
 
 export async function GET(req: NextRequest) {
 
+    // imageParams.set('fname', fname)
+    // imageParams.set('fid', fid.toString())
+    // imageParams.set('eth_addresses', eth_addresses.join(','))
     const fname = req.nextUrl.searchParams.get('fname')
-    const ens = req.nextUrl.searchParams.get('ens')
+    const fid = req.nextUrl.searchParams.get('fid')
+    const eth_addressesEncoded = req.nextUrl.searchParams.get('eth_addresses')
+    const eth_addresses = eth_addressesEncoded ? decodeURIComponent(eth_addressesEncoded).split(',') : []
 
     // Fonts
     const regular = await fetch(
@@ -30,9 +35,9 @@ export async function GET(req: NextRequest) {
                     id="mid-section"
                     style={{
                         display: "flex",
-                        flexDirection: "column",
+                        flexDirection: "row",
                         padding: 20,
-                        gap: 16,
+                        gap: 50,
                         height: "70%",
                         alignItems: "center",
                         justifyContent: "center",
@@ -40,8 +45,17 @@ export async function GET(req: NextRequest) {
                         fontFamily: "mono",
                     }}
                 >
-                    <h1>{fname}</h1>
-                    <h1>{ens}</h1>
+                    <h1 style={{width: '30%'}}>{fname}</h1>
+                    <h1 style={{width: '30%'}}>{fid}</h1>
+                    {eth_addresses?.map((ethAddy, i) => {
+                        const key = `ethAddy{i}`
+                        return (
+                            <span style={{
+                                wordBreak: 'break-all',
+                                width: '30%'
+                            }} key={key}>{ethAddy}</span>
+                        )
+                    })}
                 </div>
                 <div
                     id="bottom-bar"

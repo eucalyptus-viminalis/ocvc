@@ -9,6 +9,11 @@ async function create() {
         console.log("found none");
     }
     console.log(allUsers);
+    const status = await prisma.statusModel.findMany();
+    if (!status || status.length == 0) {
+        console.log("found none");
+    }
+    console.log(status);
     const tokens = await prisma.tokenTransferModel.findMany();
     if (!tokens || tokens.length == 0) {
         console.log("found none");

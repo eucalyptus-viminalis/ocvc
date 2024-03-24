@@ -5,25 +5,26 @@ import { appConfig } from "../../appConfig";
 
 export async function GET(
     req: NextRequest,
-    { params }: { params: { fname: string } }
+    { params }: { params: { fid: string } }
 ) {
-    const fnameSlug = params.fname;
-    const data = await getData(fnameSlug)
-    const {imageUrls} = data
+    const fid = params.fid;
+    const data = await getData(+fid)
+    if (!data) return new Response('taste data not found for fid: ' + fid, {status:500})
+    const {tokenTransfers} = data
     const imageParams = new URLSearchParams()
-    imageUrls.forEach((imageUrl, i) => {
-        imageParams.set(`imageUrl${i}`, imageUrl)
+    tokenTransfers.forEach((token, i) => {
+        imageParams.set(`imageUrl${i}`, token.tokenNftContentValueImageMedium?.toString() ?? '')
     })
 
-    const image = appConfig.host + '/' + fnameSlug + '/taste/image?' + imageParams
+    const image = appConfig.host + '/' + fid + '/taste/image?' + imageParams
     const frame: Frame = {
         image,
-        postUrl: appConfig.host + '/' + fnameSlug + '/taste',
+        postUrl: appConfig.host + '/' + fid + '/taste',
         version: 'vNext',
         // accepts: [],
         buttons: [
             {action: 'post', label: '<'},
-            {action: 'post', label: '>'},
+            {action: 'link', label: 'do me!', target: 'https://ocvc.vercel.app'},
         ],
         imageAspectRatio: '1.91:1',
         // inputText,
@@ -36,16 +37,13 @@ export async function GET(
 
 export async function POST(
     req:NextRequest,
-    {params}: {params: {fname: string}}
+    {params}: {params: {fid: string}}
 ) {
-    const {fname} = params
+    const {fid} = params
     const data: FrameActionPayload = await req.json()
     // route request
     if (data.untrustedData.buttonIndex == 1) {
-        const res = await fetch(appConfig.host + '/' + fname + '/status')
-        return new Response(res.body, {headers:{'content-type':'text/html'}})
-    } else if (data.untrustedData.buttonIndex == 2) {
-        const res = await fetch(appConfig.host + '/' + fname + '/supporters')
+        const res = await fetch(appConfig.host + '/' + fid + '/status')
         return new Response(res.body, {headers:{'content-type':'text/html'}})
     }
 }
