@@ -45,8 +45,8 @@ export async function GET(req: NextRequest) {
                         fontFamily: "mono",
                     }}
                 >
-                    <h1 style={{width: '30%'}}>{fname}</h1>
-                    <h1 style={{width: '30%'}}>{fid}</h1>
+                    <h1 style={{width: '30%', wordBreak: 'break-all'}}>{fname}</h1>
+                    <h1 style={{width: '30%', wordBreak: 'break-all'}}>{fid}</h1>
                     {eth_addresses?.map((ethAddy, i) => {
                         const key = `ethAddy{i}`
                         return (
