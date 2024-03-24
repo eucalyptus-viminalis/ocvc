@@ -42,12 +42,15 @@ export async function getTasteData(fid: number) {
     }
     const ethAddy = eth_addresses.at(0);
     if (!ethAddy) return null;
-    const latestTransfers = await getRecentTokenTransfersOnBase(
+    const latestTransfersRes = await getRecentTokenTransfersOnBase(
         eth_addresses,
         "base"
     );
+    const latestTransfers = latestTransfersRes.TokenTransfers.TokenTransfer.filter(token => {
+        return token.tokenNft.contentValue.image
+    })
     const data: TasteData = {
-        latestTokenTransfers: latestTransfers.TokenTransfers.TokenTransfer
+        latestTokenTransfers: latestTransfers
     }
     console.log(JSON.stringify(latestTransfers, null,2));
     return data
@@ -78,7 +81,7 @@ type TokenTransfersData = {
 const gql = `
   query MyQuery($eoas: [Identity!], $blockchain: TokenBlockchain!) {
     TokenTransfers(
-      input: {filter: {tokenType: {_in: [ERC1155, ERC721]}, to: {_in: $eoas}}, blockchain: $blockchain, order: {blockTimestamp: DESC}, limit: 10}
+      input: {filter: {tokenType: {_in: [ERC1155, ERC721]}, to: {_in: $eoas}}, blockchain: $blockchain, order: {blockTimestamp: DESC}, limit: 20}
     ) {
       TokenTransfer {
         tokenAddress

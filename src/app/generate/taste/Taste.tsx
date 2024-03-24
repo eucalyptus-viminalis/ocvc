@@ -1,3 +1,4 @@
+"use client"
 import { useContext } from "react";
 import { getTasteData } from "./data";
 import { GlobalContext } from "../../GlobalContext";
@@ -15,8 +16,6 @@ export async function Taste(props: TasteProps) {
         queryKey: ["tasteData"],
         queryFn: () => getTasteData(fid),
     });
-    if (isPending) return "Loading...";
-    if (error) return "Error occured.";
 
     const updateTaste = (i: number) => {
         const selectedToken = data!.latestTokenTransfers!.at(i)!;
@@ -51,11 +50,14 @@ export async function Taste(props: TasteProps) {
         setTaste({});
     };
 
+    if (isPending) return "Loading...";
+    if (error) return "Error occured.";
+
     return (
         <div className="flex flex-row gap-8 w-full justify-between">
             <div id="left" className="flex flex-col gap-10 w-1/3">
                 <h2 className="text-3xl">Available</h2>
-                {data!.latestTokenTransfers!.map((tokenTransfer, i) => {
+                {data?.latestTokenTransfers?.map((tokenTransfer, i) => {
                     const key = `tokenTransfer${i}`;
                     return (
                         <button
