@@ -8,6 +8,23 @@ export type TasteData = {
     latestTokenTransfers?: TokenTransfer[];
 };
 
+type TokenTransfer = {
+    tokenAddress: string
+    tokenNft: {
+        contentValue: {
+            image: {
+                medium: string
+            }
+        }
+        tokenId: string
+    }
+    tokenType: string   // e.g. "ERC721"
+    blockchain: string  // e.g. "base"
+    token: {
+        name: string
+    }
+}
+
 export async function getTasteData(fid: number) {
     const neynar = new NeynarAPIClient(appConfig.neynarApiKey, {
         // axiosInstance,
@@ -52,22 +69,6 @@ export async function getRecentTokenTransfersOnBase(
     return data;
 }
 
-type TokenTransfer = {
-    tokenAddress: string
-    tokenNft: {
-        contentValue: {
-            image: {
-                medium: string
-            }
-        }
-        tokenId: string
-    }
-    tokenType: string   // e.g. "ERC721"
-    blockchain: string  // e.g. "base"
-    token: {
-        name: string
-    }
-}
 type TokenTransfersData = {
     TokenTransfers: {
         TokenTransfer: [TokenTransfer]

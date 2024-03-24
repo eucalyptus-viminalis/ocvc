@@ -2,12 +2,14 @@
 import Link from "next/link";
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext";
+import Generate from "./Generate";
 
 export default function Links() {
     const context = useContext(GlobalContext);
     const { identity, status, taste, vanity } = context;
     return (
         <>
+            <Generate/>
             <Link href={"status"} className={status ? "text-green-600" : ""}>
                 Status
             </Link>

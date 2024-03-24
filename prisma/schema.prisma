@@ -1,0 +1,92 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model IdentityModel {
+  id            Int      @id @default(autoincrement())
+  fid           Int @unique
+  fname   String @unique
+  eth_addresses String[]
+}
+
+model StatusModel {
+  id                           Int     @id @default(autoincrement())
+  fid           Int @unique
+  firstTxOnBase_timestamp      String?
+  firstTxOnBase_txHash         String?
+  firstTxOnEth_timestamp       String?
+  firstTxOnEth_txHash          String?
+  fcFollowerCount              Int?
+  fcEngagementScore_rank       Int?
+  fcEngagementScore_score      Float?
+  fcEngagementScore_percentile Int?
+  fcFollowingScore_rank        Int?
+  fcFollowingScore_score       Float?
+  fcFollowingScore_percentile  Int?
+  totalSuperchainBalance       String?
+}
+
+model TasteModel {
+  id             Int                  @id @default(autoincrement())
+  fid           Int @unique
+  tokenTransfers TokenTransferModel[]
+}
+
+model TokenTransferModel {
+  id                              Int         @id @default(autoincrement())
+  fid           Int
+  tasteDataId                     Int?
+  tokenAddress                    String
+  tokenNftContentValueImageMedium String?
+  tokenNftTokenId                 String
+  tokenType                       String
+  blockchain                      String
+  tokenName                       String
+  TasteModel                      TasteModel? @relation(fields: [tasteModelId], references: [id])
+  tasteModelId                    Int?
+}
+
+model VanityModel {
+  id        Int      @id @default(autoincrement())
+  fid           Int @unique
+  pfpUrls   String[]
+  hasOpepen Boolean?
+  ensNames  String[]
+}
+
+// model Identity {
+//   id        Int      @id @default(autoincrement())
+//   createdAt DateTime @default(now())
+//   updatedAt DateTime @updatedAt
+//   title     String   @db.VarChar(255)
+//   content   String?
+//   published Boolean  @default(false)
+//   author    User     @relation(fields: [authorId], references: [id])
+//   authorId  Int
+// }
+
+// model Status {
+//   id     Int     @id @default(autoincrement())
+//   bio    String?
+//   user   User    @relation(fields: [userId], references: [id])
+//   userId Int     @unique
+// }
+
+// model Taste {
+//   id      Int      @id @default(autoincrement())
+//   email   String   @unique
+//   name    String?
+//   posts   Post[]
+//   profile Profile?
+// }

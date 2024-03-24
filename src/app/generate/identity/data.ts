@@ -4,6 +4,7 @@ import { appConfig } from "../../appConfig"
 
 export type IdentityData = {
     fid?: number,
+    fname?: string
     eth_addresses?: string[]
 }
 
@@ -13,12 +14,15 @@ export async function getIdentityData(fid: number) {
         // basePath,
         // logger,
     })
-    const eth_addresses = await neynar.fetchBulkUsers([fid]).then(v => {
-        return v.users.at(0)?.verified_addresses.eth_addresses
-    })
+    const res = await neynar.fetchBulkUsers([fid])
+    const user = res.users.at(0)
+    if (!user) throw new Error('no user found')
+    const eth_addresses = user.verified_addresses.eth_addresses
+    const fname = user.username
     const data: IdentityData = {
         eth_addresses,
         fid,
+        fname
     }
     console.log(data)
     return data
