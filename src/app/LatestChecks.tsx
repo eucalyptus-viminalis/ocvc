@@ -13,7 +13,7 @@ export default async function LatestChecks() {
     const [copied, setCopied] = useState<boolean>()
 
     const copy = (i: number) => {
-        navigator.clipboard.writeText("https://ocvc.vercel.app/" + data!.at(i)!.fid)
+        navigator.clipboard.writeText("https://ocvc.vercel.app/" + data!.at(i)!.fid + '/frame')
         setCopied(true)
     }
     useEffect(() => {
@@ -34,7 +34,7 @@ export default async function LatestChecks() {
                 return (
                 <div className="border p-2 flex flex-col gap-4 w-full">
                     <span className="bold text-4xl">{d.fname}'s OCVC* frame URL:</span>
-                    <span className="">{'https://ocvc.vercel.app/' + d.fid}</span>
+                    <span className="">{'https://ocvc.vercel.app/' + d.fid + '/frame'}</span>
                     {copied? (
                         <span>Copied!</span>
                     ) : <button onClick={() => copy(i)} className="border p-2 w-fit px-8 hover:opacity-70">clipboard</button>}

@@ -8,7 +8,7 @@ import { Suspense } from "react";
 export async function generateMetadata({
     params,
 }: {
-    params: { fid: string };
+    params: { fid: number };
 }) {
     const { fid } = params;
     console.log('fid', fid);

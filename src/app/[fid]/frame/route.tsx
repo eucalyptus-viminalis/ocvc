@@ -11,7 +11,6 @@ export async function GET(
     const imageParams = new URLSearchParams()
     // TODO: cache bust remove later
     imageParams.set('date', Date.now().toString())
-    const fname = params.fid;
     const image = appConfig.host + '/' + fid + '/frame/image?' + imageParams
     const frame: Frame = {
         image,
@@ -34,7 +33,7 @@ export async function GET(
         // htmlBody: ,
         // htmlHead,
         // og,
-        title: fname + ' | ocvc*',
+        title: fid + ' | ocvc*',
     })
     return new Response(html, {headers:{'content-type':'text/html'}});
 }
