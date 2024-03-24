@@ -38,7 +38,7 @@ export default function Generate() {
                 Generate!
             </button>
             {generating ? (
-                <div className="gap-6 items-center fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
+                <div className="gap-6 items-center top-0 left-0 fixed z-50 w-full h-full bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
                     {fid ? (
                         <div className="flex flex-col">
                             <span>your vibe check is ready!</span>
@@ -55,7 +55,7 @@ export default function Generate() {
                 </div>
             ) : null}
             {!generating && fid ? (
-                <div className="gap-6 items-center fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
+                <div className="gap-6 items-center fixed z-50 w-full h-full bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
                     <span>Your vibe check is ready!</span>
                     <Link
                         className="p-2 w-fit px-8 border hover:opacity-70"
@@ -66,7 +66,7 @@ export default function Generate() {
                 </div>
             ) : null}
             {generationFailed ? (
-                <div className="gap-6 items-center fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
+                <div className="gap-6 top-0 left-0 items-center fixed z-50 w-full h-full bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
                     <span>Unable to generate your vibe check.</span>
                     {identity.fid ? (
                         <div className="flex w-full align-middle items-center justify-center flex-col gap-4">

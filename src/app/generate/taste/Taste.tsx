@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { getTasteData } from "./data";
 import { GlobalContext } from "../../GlobalContext";
 import { useQuery } from "@tanstack/react-query";
+import Generate from "../Generate";
 
 type TasteProps = {
     fid: number;
@@ -111,6 +112,8 @@ export async function Taste(props: TasteProps) {
                     );
                 })
                 ) : 'None'}
+                <span>{'you can generate your vibe check now :)'}</span>
+                <Generate/>
             </div>
         </div>
     );
