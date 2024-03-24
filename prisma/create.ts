@@ -8,6 +8,7 @@ async function create() {
         data: {
             eth_addresses: ['0xlol'],
             fid: 30,
+            fname: 'hello'
         },
     })
     const allUsers = await prisma.identityModel.findMany()
