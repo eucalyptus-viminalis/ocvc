@@ -110,6 +110,7 @@ export async function Identity(props: IdentityProps) {
             </div>
             <div id="right" className="flex w-1/3 flex-col gap-5">
                 <h3 className="text-3xl">Selected</h3>
+                <span className="text-lg opacity-70">Make sure you select your FID + Farcaster Name</span>
                 <button className="border p-2 hover:opacity-70" onClick={clear}>
                     Clear
                 </button>
