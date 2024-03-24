@@ -2,6 +2,8 @@ import { Frame } from "frames.js";
 import { appConfig } from "../appConfig";
 import { FrameContainer } from "frames.js/next/server";
 import { fetchMetadata } from "frames.js/next";
+import { VibeCheck } from "./VibeCheck";
+import { Suspense } from "react";
 
 export async function generateMetadata({
     params,
@@ -32,10 +34,11 @@ export default function UserRootPage({
     params: { fid: string };
 }) {
     const { fid } = params;
-    // const image = appConfig.host + '/' + fname + '/image'
     return (
         <>
-            <h1>{fid}</h1>
+            <Suspense>
+                <VibeCheck fid={+fid}/>
+            </Suspense>
         </>
     );
 }

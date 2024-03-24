@@ -101,15 +101,16 @@ export async function Status(props: StatusProps) {
     };
 
     return (
-        <div className="flex flex-row gap-8">
-            <div className="flex flex-col gap-8 w-1/3 break-words">
+        <div className="flex flex-row gap-8 w-full justify-between">
+            <div id="left" className="flex flex-col gap-10 w-1/3">
+                <h2 className="text-3xl">Available</h2>
                 {data.fcFollowerCount ? (
                     <div
                         onClick={updateFollowerCount}
                         id="followerCount"
-                        className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                    className="p-4 hover:opacity-80 gap-2 hover:cursor-pointer flex flex-col border rounded"
                     >
-                        <span>FC follower count</span>
+                        <span className="opacity-70">FC follower count</span>
                         <span>{data.fcFollowerCount}</span>
                     </div>
                 ) : null}
@@ -117,9 +118,9 @@ export async function Status(props: StatusProps) {
                     <div
                         onClick={updateFirstTxOnBase}
                         id="firstTxOnBase"
-                        className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                        className="p-4 gap-2 break-words hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
                     >
-                        <span>1st token transfer on Base!</span>
+                        <span className="opacity-70">1st token transfer on Base!</span>
                         <span>{data.firstTxOnBase.timestamp}</span>
                         <span>{data.firstTxOnBase.txHash}</span>
                     </div>
@@ -128,9 +129,9 @@ export async function Status(props: StatusProps) {
                     <div
                         onClick={updateFirstTxOnEth}
                         id="firstTxOnEth"
-                        className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                        className="p-4 gap-2 break-words hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
                     >
-                        <span>1st token transfer on Ethereum!</span>
+                        <span className="opacity-70">1st token transfer on Ethereum!</span>
                         <span>{data.firstTxOnEth.timestamp}</span>
                         <span>{data.firstTxOnEth.txHash}</span>
                     </div>
@@ -139,9 +140,9 @@ export async function Status(props: StatusProps) {
                     <div
                         onClick={updateFcFollowingScore}
                         id="followingScore"
-                        className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                        className="p-4 gap-2 break-words hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
                     >
-                        <span>farcaster following score</span>
+                        <span className="opacity-70">farcaster following score</span>
                         <span>rank: {data.fcFollowingScore.rank}</span>
                         <span>score: {data.fcFollowingScore.score}</span>
                         <span>
@@ -153,9 +154,9 @@ export async function Status(props: StatusProps) {
                     <div
                         onClick={updateFcEngagementScore}
                         id="engagementScore"
-                        className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                        className="p-4 gap-2 break-words hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
                     >
-                        <span>farcaster engagement score</span>
+                        <span className="opacity-70">farcaster engagement score</span>
                         <span>rank: {data.fcEngagementScore.rank}</span>
                         <span>score: {data.fcEngagementScore.score}</span>
                         <span>
@@ -164,11 +165,62 @@ export async function Status(props: StatusProps) {
                     </div>
                 ) : null}
             </div>
-            <div id="right" className="flex flex-col w-1/3">
-                <button onClick={clear}>Clear</button>
-                <Link href='vanity'>Done</Link>
-                <h1>Including these vibes</h1>
-                <p>{JSON.stringify(status, null, 2)}</p>
+            <div id="right" className="flex w-1/3 flex-col gap-5">
+                <h3 className="text-3xl">Selected</h3>
+                <button className="border p-2 hover:opacity-70" onClick={clear}>
+                    Clear
+                </button>
+                <div className="flex flex-col gap-2">
+                    <span>fcFollowerCount:</span>
+                    {status.fcFollowerCount ? (
+                        <span className="p-2 border bg-green-800 w-fit">
+                            {status.fcFollowerCount}
+                        </span>
+                    ) : (
+                        <span>None</span>
+                    )}
+                </div>
+                <div className="flex flex-col gap-2">
+                    <span>1st tx on base:</span>
+                    {status.firstTxOnBase ? (
+                        <span className="p-2 border bg-green-800 w-fit">
+                            {status.firstTxOnBase.timestamp}
+                        </span>
+                    ) : (
+                        <span>None</span>
+                    )}
+                </div>
+                <div className="flex flex-col gap-2">
+                    <span>1st tx on ethereum:</span>
+                    {status.firstTxOnEth ? (
+                        <span className="p-2 border bg-green-800 w-fit">
+                            {status.firstTxOnEth.timestamp}
+                        </span>
+                    ) : (
+                        <span>None</span>
+                    )}
+                </div>
+                <div className="flex flex-col gap-2">
+                    <span>fc following score:</span>
+                    {status.fcFollowingScore ? (
+                        <span className="p-2 w-fit border bg-green-800">
+                            {'rank #' + status.fcFollowingScore.rank}
+                        </span>
+                    ) : (
+                        <span>None</span>
+                    )}
+                </div>
+                <div className="flex flex-col gap-2">
+                    <span>fc engagement score:</span>
+                    {status.fcEngagementScore ? (
+                        <span className="p-2 w-fit border bg-green-900">
+                            {'rank #' + status.fcEngagementScore.rank}
+                        </span>
+                    ) : (
+                        <span>None</span>
+                    )}
+                </div>
+                <Link className="text-center border p-2 px-8 hover:opacity-70 w-full" href={'/generate/vanity'}>Next</Link>
             </div>
         </div>
     );

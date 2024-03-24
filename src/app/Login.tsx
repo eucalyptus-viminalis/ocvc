@@ -1,20 +1,26 @@
-"use client"
+"use client";
 
-import { usePrivy } from "@privy-io/react-auth"
+import { usePrivy } from "@privy-io/react-auth";
 
 export default function Login() {
-    const {authenticated, login, ready, user, logout} = usePrivy()
+    const { authenticated, login, ready, user, logout } = usePrivy();
+    if (!ready) return "Loading account data...";
     return (
         <>
-            <p>{`authenticated? ${authenticated}`}</p>
-            <button 
-            disabled={!ready || (ready && authenticated)} 
-            onClick={login}>login</button>
-            <button 
-            disabled={!ready || (ready && !authenticated)} 
-            onClick={logout}>logout</button>
-            <p>{user ? JSON.stringify(user.farcaster, null ,2) : null}</p>
-            <p>{user ? JSON.stringify(user.wallet, null ,2) : null}</p>
+            {ready && !authenticated ? (
+                <div className="flex flex-col gap-2 text-lg">
+                    <button
+                        className="border p-4 px-8 hover:opacity-70"
+                        disabled={!ready || (ready && authenticated)}
+                        onClick={login}
+                    >
+                        login
+                    </button>
+                    <span className="opacity-70 text-sm">
+                        login to generate your ocvc*
+                    </span>
+                </div>
+            ) : null}
         </>
-    )
+    );
 }

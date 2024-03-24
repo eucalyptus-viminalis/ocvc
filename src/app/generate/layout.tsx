@@ -13,13 +13,14 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-            <div className='flex flex-col'>
+            <div className='flex w-full flex-col'>
                 <div className="flex flex-row gap-10">
                     <Links/>
                 </div>
                 {children}
 
-                <div className="flex flex-row gap-10">
+                <div className="flex flex-col gap-2 opacity-30">
+                    <span>data so far...</span>
                     <ContextHints/>
                 </div>
             </div>

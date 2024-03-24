@@ -21,10 +21,9 @@ export default function IdentityPage() {
     }
 
     return (
-        <div>
-            <h2 className="text-2xl">Identity</h2>
-            <p>Logged in as: {user?.farcaster?.username}</p>
-            <p>fid set?: {fid}</p>
+        <div className="flex flex-col w-full gap-4 mt-4">
+            <h2 className="text-6xl">Identity</h2>
+            <hr className="w-full"></hr>
             {fid ? (
                 <Suspense>
                     <Identity fid={fid}/>

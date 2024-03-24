@@ -3,28 +3,36 @@ import Link from "next/link";
 import { useContext } from "react";
 import { GlobalContext } from "../GlobalContext";
 import Generate from "./Generate";
+import { appConfig } from "../appConfig";
 
 export default function Links() {
     const context = useContext(GlobalContext);
     const { identity, status, taste, vanity } = context;
     return (
         <>
-            <Generate/>
-            <Link href={"status"} className={status ? "text-green-600" : ""}>
-                Status
-            </Link>
             <Link
-                href={"identity"}
-                className={identity ? "text-green-600" : ""}
+                href={'/generate/identity'}
+            className='border p-2 px-8 hover:opacity-70'
             >
                 identity
             </Link>
-            <Link href={"taste"} className={taste ? "text-green-600" : ""}>
-                taste
+            <Link 
+                href={'/generate/status'}
+            className='border p-2 px-8 hover:opacity-70'
+            >
+                status
             </Link>
-            <Link href={"vanity"} className={vanity ? "text-green-600" : ""}>
+            <Link 
+            className='border p-2 px-8 hover:opacity-70'
+            href={"/generate/vanity"}>
                 vanity
             </Link>
+            <Link 
+            className='border p-2 px-8 hover:opacity-70'
+            href={"/generate/taste"}>
+                taste
+            </Link>
+            <Generate/>
         </>
     );
 }

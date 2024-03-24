@@ -14,9 +14,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             config={{
                 // Customize Privy's appearance in your app
                 appearance: {
-                    theme: "light",
+                    theme: "dark",
                     accentColor: "#676FFF",
-                    logo: appConfig.host + "/vercel.svg",
+                    logo: appConfig.host + "/placeholder.svg",
+                    // logo: 'https://localhost:3000' + "/placeholder.svg",
                 },
                 // Create embedded wallets for users who don't have a wallet
                 embeddedWallets: {

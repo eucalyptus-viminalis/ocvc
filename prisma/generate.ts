@@ -12,7 +12,7 @@ type generateVibeCheckProps = {
     vanity: VanityData;
 };
 
-export async function generateVibeChceck(props: generateVibeCheckProps) {
+export async function generateVibeCheck(props: generateVibeCheckProps) {
     console.log('generate start')
     const { identity, status, taste, vanity } = props;
     const [a,b,c,d] = await Promise.all([
@@ -75,10 +75,13 @@ export async function generateVibeChceck(props: generateVibeCheckProps) {
             },
         }),
     ]);
-    console.log('a',JSON.stringify(a))
-    console.log('b',JSON.stringify(b))
-    console.log('c',JSON.stringify(c))
-    console.log('d',JSON.stringify(d))
+    const data = {
+        identity: a,
+        status: b,
+        vanity: c,
+        taste: d,
+    }
+    return data
 }
 
 // generateVibeChceck()

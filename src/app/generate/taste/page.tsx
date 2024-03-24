@@ -25,12 +25,11 @@ export default function TastePage() {
     }
 
     return (
-        <div>
-            <h2 className="text-2xl">Taste</h2>
-            <p>Logged in as: {user?.farcaster?.username}</p>
-            <p>fid set?: {fid}</p>
+        <div className="flex flex-col w-full gap-4 mt-4">
+            <h2 className="text-6xl">Taste</h2>
+            <hr className="w-full"></hr>
             {fid ? (
-                <Suspense >
+                <Suspense fallback={'Loading...'}>
                     <Taste fid={fid}/>
                 </Suspense>
             ) : null}

@@ -74,22 +74,23 @@ export async function Identity(props: IdentityProps) {
         setIdentity({});
     };
     return (
-        <div className="flex flex-row gap-10">
-            <div className="flex flex-col gap-10 w-1/3">
+        <div className="flex flex-row gap-10 w-full justify-between">
+            <div id="left" className="flex flex-col gap-10 w-1/3">
+                <h2 className="text-3xl">Available</h2>
                 <div
                     onClick={updateFname}
                     id="fname"
-                    className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                    className="p-4 hover:opacity-80 gap-2 hover:cursor-pointer flex flex-col border rounded"
                 >
-                    <span>Farcaster Name</span>
+                    <span className="opacity-70">Farcaster Name</span>
                     <span>{data.fname}</span>
                 </div>
                 <div
                     onClick={updateFid}
                     id="fid"
-                    className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                    className="p-4 hover:opacity-80 gap-2 hover:cursor-pointer flex flex-col border rounded"
                 >
-                    <span>FID</span>
+                    <span className="opacity-70">FID</span>
                     <span>{data.fid}</span>
                 </div>
 
@@ -99,24 +100,50 @@ export async function Identity(props: IdentityProps) {
                         <div
                             key={key}
                             onClick={() => updateEthAddresses(i)}
-                            className="p-4 hover:opacity-80 hover:cursor-pointer flex flex-col border rounded"
+                            className="p-4 hover:opacity-80 gap-2 hover:cursor-pointer flex flex-col border rounded"
                         >
-                            <span>eth addy {i}</span>
-                            <span>{ethAddy}</span>
+                            <span className="opacity-70">eth addy #{i}</span>
+                            <span className="break-words">{ethAddy}</span>
                         </div>
                     );
                 })}
             </div>
-            <div id="right" className="flex flex-col gap-5">
-                <button onClick={clear}>Clear</button>
-                <Link href='status'>Done</Link>
-                <p>{JSON.stringify(identity, null, 2)}</p>
-                <span>fid: {identity?.fid}</span>
+            <div id="right" className="flex w-1/3 flex-col gap-5">
+                <h3 className="text-3xl">Selected</h3>
+                <button className="border p-2 hover:opacity-70" onClick={clear}>
+                    Clear
+                </button>
+                <div className="flex flex-col gap-2">
+                    <span>fid:</span>
+                    {identity.fid ? (
+                        <span className="p-2 border bg-green-700">
+                            {identity.fid}
+                        </span>
+                    ) : (
+                        <span>None</span>
+                    )}
+                </div>
+                <div className="flex flex-col gap-2">
+                    <span>fname:</span>
+                    {identity.fname ? (
+                        <span className="p-2 border bg-green-700">
+                            {identity.fname}
+                        </span>
+                    ) : (
+                        <span>None</span>
+                    )}
+                </div>
                 <span>eth addys:</span>
-                {identity.eth_addresses?.map((ethAddy, i) => {
-                    const key = `ethAddyInContext${i}`;
-                    return <div key={key}>{ethAddy}</div>;
-                })}
+                {identity.eth_addresses && identity.eth_addresses.length !== 0
+                    ? identity.eth_addresses?.map((ethAddy, i) => {
+                          const key = `ethAddyInContext${i}`;
+                          return <div key={key} className="break-words border p-2 bg-green-700">{ethAddy}</div>;
+                      })
+                    : "None"}
+                {identity.fname && identity.fid ? (
+                    <Link className="text-center border p-2 px-8 hover:opacity-70 w-full" href={'/generate/status'}>Next</Link>
+                ) : null}
+
             </div>
         </div>
     );

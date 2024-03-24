@@ -1,17 +1,13 @@
 "use client";
 
 import { usePrivy } from "@privy-io/react-auth";
-import { Suspense, useContext, useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Login from "../../Login";
 import { Vanity } from "./Vanity";
-import { GlobalContext } from "../../GlobalContext";
-import Link from "next/link";
-import Links from "../Links";
 
 export default function VanityPage() {
     const [fid, setFid] = useState<number | undefined | null>();
     const { user, ready, authenticated } = usePrivy();
-    const {identity,status,taste,vanity,} = useContext(GlobalContext)
 
     useEffect(() => {
         if (ready && authenticated) {
@@ -29,28 +25,11 @@ export default function VanityPage() {
     }
 
     return (
-        <div className="flex flex-col w-full">
-            <div
-            className="flex flex-row justify-between"  
-            >
-                <div
-                    id="left"
-                    className="flex flex-col" 
-                >
-                    <h2 className="text-2xl">Vanity</h2>
-                    <p>Logged in as: {user?.farcaster?.username}</p>
-                    <p>fid set?: {fid}</p>
-                </div>
-                <div
-                    id="right"
-                    className="flex flex-col" 
-                >
-                    <Links/>
-                </div>
-
-            </div>
+        <div className="flex flex-col w-full gap-4 mt-4">
+            <h2 className="text-6xl">Vanity</h2>
+            <hr className="w-full"></hr>
             {fid ? (
-                <Suspense >
+                <Suspense fallback={'Loading...'}>
                     <Vanity fid={fid}/>
                 </Suspense>
             ) : null}
