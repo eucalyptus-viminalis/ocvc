@@ -28,6 +28,14 @@ export default async function LatestChecks() {
     if (isPending) return "Loading...";
     if (error) return "Error occured.";
 
+    const debuggerUrl = (fid: number) => {
+        const urlParams = new URLSearchParams();
+        urlParams.set("url", "https://ocvc.vercel.app/" + fid + '/frame');
+        const debuggerUrl = "https://warpcast.com/~/developers/frames?" + urlParams;
+        return debuggerUrl
+    }
+
+
     return (
         <div>
             {data.map((d,i) => {
@@ -39,7 +47,17 @@ export default async function LatestChecks() {
                     {copied? (
                         <span>Copied!</span>
                     ) : <button onClick={() => copy(i)} className="border p-2 w-fit px-8 hover:opacity-70">clipboard</button>}
-                    <span className="text-sm opacity-70">hint: copy the url above and include it in your cast</span>
+                    <span className="text-sm opacity-70">
+                        hint: copy the url above and include it in your cast or
+                        try in the Warpcast debugger
+                    </span>
+                    <a
+                    target='_blank'
+                        href={debuggerUrl(d.fid)}
+                        className="border text-blue-500 p-2 w-fit px-8 hover:opacity-70"
+                    >
+                        try in debugger
+                    </a>
                 </div>
             )
             })}
