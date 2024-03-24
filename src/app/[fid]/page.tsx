@@ -6,12 +6,12 @@ import { fetchMetadata } from "frames.js/next";
 export async function generateMetadata({
     params,
 }: {
-    params: { fname: string };
+    params: { fid: string };
 }) {
-    const { fname } = params;
-    console.log('fname', fname);
+    const { fid } = params;
+    console.log('fid', fid);
     const url = new URL(
-        "/" + fname.toString() + "/frame",
+        "/" + fid.toString() + "/frame",
         appConfig.host || "http://localhost:3000"
     );
     console.log('url', url);
@@ -29,13 +29,13 @@ export async function generateMetadata({
 export default function UserRootPage({
     params,
 }: {
-    params: { fname: string };
+    params: { fid: string };
 }) {
-    const { fname } = params;
+    const { fid } = params;
     // const image = appConfig.host + '/' + fname + '/image'
     return (
         <>
-            <h1>{fname}</h1>
+            <h1>{fid}</h1>
         </>
     );
 }
