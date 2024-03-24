@@ -50,7 +50,7 @@ export async function VibeCheck(props: VibeCheckProps) {
             {data ? (
                 <div className="flex flex-col gap-4 w-full">
                     <span className="bold text-4xl">
-                        {data.fname}'s OCVC* frame URL:
+                        {data.fname + `'s OCVC* frame URL:`}
                     </span>
                     <span className="">
                         {"https://ocvc.vercel.app/" + data.fid + '/frame'}
