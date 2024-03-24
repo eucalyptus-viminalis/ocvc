@@ -24,8 +24,8 @@ export default function GeneratePage() {
         <div>
             <h1>Generate</h1>
             <p>Logged in as: {user?.farcaster?.username}</p>
-            <p>Start with Identity</p>
-            <Link href={'generate/identity'}>Identity</Link>
+            <p className="text-9xl">Start with Identity</p>
+            <Link className="text-5xl border p-2 hover:opacity-80" href={'generate/identity'}>Identity</Link>
         </div>
     );
 }
