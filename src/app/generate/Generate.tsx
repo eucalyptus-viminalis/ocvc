@@ -55,7 +55,7 @@ export default function Generate() {
                 </div>
             ) : null}
             {!generating && fid ? (
-                <div className="gap-6 items-center fixed z-50 w-full h-full bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
+                <div className="gap-6 items-center top-0 left-0 fixed z-50 w-full h-full bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
                     <span>Your vibe check is ready!</span>
                     <Link
                         className="p-2 w-fit px-8 border hover:opacity-70"
