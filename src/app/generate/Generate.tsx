@@ -54,6 +54,17 @@ export default function Generate() {
                     )}
                 </div>
             ) : null}
+            {!generating && fid ? (
+                <div className="gap-6 items-center fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
+                    <span>Your vibe check is ready!</span>
+                    <Link
+                        className="p-2 w-fit px-8 border hover:opacity-70"
+                        href={"/" + identity.fid!}
+                    >
+                        Check my vibe check
+                    </Link>
+                </div>
+            ) : null}
             {generationFailed ? (
                 <div className="gap-6 items-center fixed z-50 w-3/4 h-3/4 bg-black opacity-90 border flex flex-col text-center justify-center align-middle">
                     <span>Unable to generate your vibe check.</span>
