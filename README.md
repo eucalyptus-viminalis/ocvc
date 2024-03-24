@@ -32,10 +32,11 @@ https://warpcast.com/~/developers/frames?url=https%3A%2F%2Focvc.vercel.app%2F136
 
 ## Overview
 
-_ocvc*_ is a data aggregation tool for Farcaster users to generate and share their vibes. Using the tool, users are able to select various "vibe metrics" and then copy a URL that can display these vibes as an Open Frame. OCVC* retrieves its data from Farcaster Hubs and EVM-compatible chains (e.g. Base, Ethereum). Because it supports Open Frames, users can use these generated links and share them on any platform that supports the Open Frames protocol, such as XMTP (see below an example on Converse).
+_ocvc*_ is a data aggregation tool for Farcaster users to generate and share their vibes. Using the tool, users are able to select various "vibe metrics" and then copy a URL that can display these vibes as an Open Frame. OCVC* retrieves its data from Farcaster Hubs and EVM-compatible chains (e.g. Base, Ethereum). Because it supports Open Frames, users can use these generated links and share them on any platform that supports the Open Frames protocol, such as XMTP.
 
 <img width="600" src="https://github.com/eucalyptus-viminalis/ocvc/assets/65995595/002a2c70-2142-4811-9dcb-f0746f67cfb6">
 
+_ocvc frame on Converse_
 
 ## Motivation
 
