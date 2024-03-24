@@ -14,10 +14,20 @@ export type StatusData = {
         txHash: string;
     };
     fcFollowerCount?: number;
+    fcEngagementScore?: {
+        rank: number
+        score: number
+        percentile: number
+    }
+    fcFollowingScore?: {
+        rank: number
+        score: number
+        percentile: number
+    }
     totalSuperchainBalance?: string; // in ETH
 };
 
-export async function getData(fid: number) {
+export async function getStatusData(fid: number) {
     const neynar = new NeynarAPIClient(appConfig.neynarApiKey, {
         // axiosInstance,
         // basePath,
@@ -32,13 +42,20 @@ export async function getData(fid: number) {
     const eth_addresses = user.verified_addresses.eth_addresses;
     let firstTxOnBase;
     let firstTxOnEth;
+    let followingScore;
+    let engagementScore;
     if (eth_addresses.at(0)) {
-        const [res1, res2] = await Promise.all([
+        const [res1, res2, res3, res4] = await Promise.all([
             getFirstTokenTransferFrom(eth_addresses.at(0)!, "base"),
             getFirstTokenTransferFrom(eth_addresses.at(0)!, "ethereum"),
+            getFCEngagementScoreByFID(fid),
+            getFCFollowingScoreByFID(fid),
         ])
         firstTxOnBase = res1
         firstTxOnEth = res2
+        followingScore = res3
+        console.log('res3',res3)
+        engagementScore = res4
     }
 
     const data: StatusData = {
@@ -51,9 +68,18 @@ export async function getData(fid: number) {
             timestamp: firstTxOnEth.blockTimestamp,
             txHash: firstTxOnEth.transactionHash,
         }: undefined,
-        // totalSuperchainBalance,
+        fcEngagementScore: engagementScore ? {
+            percentile: engagementScore.percentile,
+            rank: engagementScore.rank,
+            score: engagementScore.score,
+        }: undefined,
+        fcFollowingScore: followingScore ? {
+            percentile: followingScore.percentile,
+            rank: followingScore.rank,
+            score: followingScore.score,
+        }: undefined,
+        // totalSuperchainBalance, //
     };
-    console.log(data);
     return data;
 }
 
@@ -99,9 +125,86 @@ export async function getFirstTokenTransferFrom(
     const firstTokenTransfer = data.Wallet.tokenTransfers.at(0);
     return firstTokenTransfer;
 }
+
 type TokenTransfer = {
     blockTimestamp: string;
     transactionHash: string;
     blockchain: string; // e.g. "base"
     chainId: string; // e.g. "8453"
 };
+
+// {
+//     "result": [
+//         {
+//             "fid": 13642,
+//             "fname": "3070",
+//             "username": "3070",
+//             "rank": 628,
+//             "score": 0.00012561345647554845,
+//             "percentile": 99
+//         }
+//     ]
+// }
+
+type KarmaScoreResult = {
+    fid: number,
+    fname: string,
+    username: string,
+    rank: number,
+    score: number,
+    percentile: number
+}
+type KarmaScoreData = {
+    result: [KarmaScoreResult]
+}
+export async function getFCFollowingScoreByFID(fid: number) {
+    "use server"
+    const res = await fetch("https://graph.cast.k3l.io/scores/global/following/fids", {
+        body: JSON.stringify([fid]),
+        method: 'POST',
+        headers: {'Content-Type':'application/json'}
+    })
+    const data: KarmaScoreData = await res.json()
+    const score: KarmaScoreResult | undefined = data.result.at(0)
+    return score
+}
+
+
+export async function getFCFollowingScoreByFname(fname: string) {
+    const res = await fetch("https://graph.cast.k3l.io/scores/global/following/handles", {
+        body: JSON.stringify([fname]),
+        method: 'POST',
+        headers: {'Content-Type':'application/json'}
+    })
+    const data: KarmaScoreData = await res.json()
+    const score: KarmaScoreResult | undefined = data.result.at(0)
+    return score
+}
+
+
+export async function getFCEngagementScoreByFID(fid: number) {
+    "use server"
+    console.log('fid', fid)
+    const res = await fetch("https://graph.cast.k3l.io/scores/global/engagement/fids", {
+        body: JSON.stringify([fid]),
+        method: 'POST',
+        headers: {'Content-Type':'application/json'}
+    })
+    const data: KarmaScoreData = await res.json()
+    console.log('fcEngagementScoreData', JSON.stringify(data))
+    const score: KarmaScoreResult | undefined = data.result.at(0)
+    return score
+}
+
+
+export async function getFCEngagementScoreByFname(fname: string) {
+    const res = await fetch("https://graph.cast.k3l.io/scores/global/engagement/handles", {
+        body: JSON.stringify([fname]),
+        method: 'POST',
+        headers: {'Content-Type':'application/json'}
+    })
+    const data: KarmaScoreData = await res.json()
+    const score: KarmaScoreResult | undefined = data.result.at(0)
+    return score
+}
+

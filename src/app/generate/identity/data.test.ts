@@ -1,3 +1,3 @@
-import { getData } from "./data";
+import { getIdentityData } from "./data";
 
-await getData(13642)
+await getIdentityData(13642)

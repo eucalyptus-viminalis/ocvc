@@ -3,11 +3,11 @@ import { NeynarAPIClient } from "@neynar/nodejs-sdk"
 import { appConfig } from "../../appConfig"
 
 export type IdentityData = {
-    fid: number,
+    fid?: number,
     eth_addresses?: string[]
 }
 
-export async function getData(fid: number) {
+export async function getIdentityData(fid: number) {
     const neynar = new NeynarAPIClient(appConfig.neynarApiKey, {
         // axiosInstance,
         // basePath,

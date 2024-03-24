@@ -4,11 +4,11 @@ import { appConfig } from "../../appConfig";
 import { Variables } from "@airstack/node/dist/types/types";
 import { fetchQuery, init } from "@airstack/node";
 
-type TasteData = {
-    latestTokenTransfers: [TokenTransfer];
+export type TasteData = {
+    latestTokenTransfers?: TokenTransfer[];
 };
 
-export async function getData(fid: number) {
+export async function getTasteData(fid: number) {
     const neynar = new NeynarAPIClient(appConfig.neynarApiKey, {
         // axiosInstance,
         // basePath,

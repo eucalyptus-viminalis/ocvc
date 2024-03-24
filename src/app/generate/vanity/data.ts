@@ -6,9 +6,9 @@ import { appConfig } from "../../appConfig"
 import { OPEPEN_ABI } from '@/src/abi/OpepenABI';
 
 export type VanityData = {
-    pfpUrls: string[],
-    hasOpepen: boolean,
-    ensNames: string[]
+    pfpUrls?: string[],
+    hasOpepen?: boolean,
+    ensNames?: string[]
 }
 
 const viem = createPublicClient({
@@ -17,7 +17,7 @@ const viem = createPublicClient({
 })
 const opepenCA = '0x6339e5E072086621540D0362C4e3Cea0d643E114'
 
-export async function getData(fid: number) {
+export async function getVanityData(fid: number) {
     const neynar = new NeynarAPIClient(appConfig.neynarApiKey, {
         // axiosInstance,
         // basePath,
