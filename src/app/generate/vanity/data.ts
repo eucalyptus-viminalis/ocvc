@@ -29,16 +29,18 @@ export async function getVanityData(fid: number) {
     const fcPfp = user.pfp_url
     const eth_addresses = user.verified_addresses.eth_addresses
     // ENS Vanity...
-    const ensNames = await Promise.all(
+    const ensNamesRes = await Promise.all(
         eth_addresses.map(addy => {
             return viem.getEnsName({address: addy as `0x${string}`})
         })
     )
-    const ensAvatars = await Promise.all(
-        ensNames.map(name => {
-            return viem.getEnsAvatar({name: name as string})
-        })
-    )
+    const ensNames = ensNamesRes.filter(name => name)
+    console.log('ensNames', JSON.stringify(ensNames))
+    const ensAvatarsRes = await Promise.all(
+    ensNames.map(name => {
+        return viem.getEnsAvatar({name: name as string})
+    }))
+    const ensAvatars = ensAvatarsRes.filter(avatar => avatar)
     const opepenCounts = await Promise.all(
         eth_addresses.map(ethAddy => {
             return viem.readContract({
@@ -49,9 +51,11 @@ export async function getVanityData(fid: number) {
             })
         })
     )
+    console.log('opepneCounts',opepenCounts)
     const opepenCountTotal = opepenCounts.reduce((acc, v) => {
         return Number(v) + acc
     }, 0)
+    // const pfpUrls = [fcPfp]
     const data: VanityData = {
         hasOpepen: opepenCountTotal != 0,
         pfpUrls: [fcPfp, ...ensAvatars as string[]],
