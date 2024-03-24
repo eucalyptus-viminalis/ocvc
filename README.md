@@ -32,7 +32,7 @@ https://warpcast.com/~/developers/frames?url=https%3A%2F%2Focvc.vercel.app%2F136
 
 ## Overview
 
-_ocvc*_ is a data aggregation tool for Farcaster users. Using the tool, users are able to select various "vibe metrics" and then copy a URL that can display these vibes as an Open Frame. OCVC* retrieves its data from Farcaster Hubs and EVM-compatible chains (e.g. Base, Ethereum). Because it supports Open Frames, users can use these generated links and share them on any platform that supports the Open Frames protocol, such as XMTP (see below an example on Converse).
+_ocvc*_ is a data aggregation tool for Farcaster users to generate and share their vibes. Using the tool, users are able to select various "vibe metrics" and then copy a URL that can display these vibes as an Open Frame. OCVC* retrieves its data from Farcaster Hubs and EVM-compatible chains (e.g. Base, Ethereum). Because it supports Open Frames, users can use these generated links and share them on any platform that supports the Open Frames protocol, such as XMTP (see below an example on Converse).
 
 <img width="600" src="https://github.com/eucalyptus-viminalis/ocvc/assets/65995595/002a2c70-2142-4811-9dcb-f0746f67cfb6">
 
@@ -118,8 +118,11 @@ _^ if fc user has not generated yet_
 - `Airstack`: Airstack is a data service for decentralized social and blockchain data
   - usage: Airstack was used to query for Farcaster's user's blockchain data such as their latest token transfers on Base (please see `src/app/generate/status` + `src/app/generate/taste`)
   - website: [Airstack](https://docs.airstack.xyz)
+- `frames.js`: frames.js is an open source Typescript library to integrate Frames into various JS frameworks
+  - usage: frames.js is used to quickly generate metadata that is in compliance with the Open Frames specs (please see: `src/app/[fid]/<endpoint>/image/route.tsx`)
+  - website: [frames.js](https://docs.karma3labs.com/farcaster)
 - `@vercel/og`: This Typescript library exposes a convenience method to generate a valid OpenGraph image using JSX elements. It uses `satori` under the hoood.
-  - usage: `ImageResponse` is used for generating all OpenGraph images for interframe. See: `src/app/[fid]/[endpoint]/image/route.tsx`
+  - usage: `ImageResponse` is used for generating all OpenGraph images for interframe. See: `src/app/[fid]/<endpoint>/image/route.tsx`
   - website: [Vercel OG](https://vercel.com/docs/functions/og-image-generation)
 - `Open Frame`: Open Frame(s) are an extension of the OpenGraph protocol to generate interactive content within various clients that support them.
   - usage: The API routes return a valid response that adheres to the Open Frames spec
