@@ -48,44 +48,44 @@ export async function GET(req: NextRequest) {
                         flexDirection: "row",
                         padding: 20,
                         gap: 10,
-                        height: "70%",
+                        height: "85%",
                         alignItems: "center",
                         justifyContent: "center",
                         width: "100%",
                         fontFamily: "mono",
-                        fontSize: 32
+                        fontSize: 42
                     }}
                 >
                     {fcFollowerCount ? (
-                        <div style={{display:'flex', flexDirection:'column', width: '19%'}}>
+                        <div style={{display:'flex', flexDirection:'column', justifyContent: 'space-between', width: '19%', height: '100%'}}>
                             <span>fc follower count</span>
                             <span>{fcFollowerCount}</span>
                             </div>
                     ) : null}
                     {firstTxOnBase ? (
-                        <div style={{display:'flex', flexDirection:'column', width: '19%'}}>
+                        <div style={{display:'flex', flexDirection:'column', width: '19%', height: '100%', justifyContent: 'space-between'}}>
                             <span>1st tx on base</span>
-                            <span style={{wordBreak: 'break-all'}}>on {firstTxOnBase.at(0)}</span>
-                            <span style={{wordBreak: 'break-all'}}>{firstTxOnBase.at(1)}</span>
+                            <span style={{wordBreak: 'break-all'}}>{firstTxOnBase.at(0)}</span>
+                            <span style={{wordBreak: 'break-all', fontSize: 32}}>{firstTxOnBase.at(1)}</span>
                             </div>
                     ) : null}
                     {firstTxOnBase ? (
-                        <div style={{display:'flex', flexDirection:'column', width: '19%'}}>
+                        <div style={{display:'flex', flexDirection:'column', width: '19%', height: '100%', justifyContent: 'space-between'}}>
                             <span>1st tx on eth</span>
-                            <span style={{wordBreak: 'break-all'}}>on {firstTxOnEth.at(0)}</span>
-                            <span style={{wordBreak: 'break-all'}}>{firstTxOnEth.at(1)}</span>
+                            <span style={{wordBreak: 'break-all'}}>{firstTxOnEth.at(0)}</span>
+                            <span style={{wordBreak: 'break-all', fontSize: 32}}>{firstTxOnEth.at(1)}</span>
                             </div>
                     ) : null}
                     {fcFollowingScore?(
-                        <div style={{display:'flex', flexDirection:'column', width: '19%'}}>
-                            <span>fc following scores</span>
+                        <div style={{display:'flex', flexDirection:'column', width: '19%', height: '100%', justifyContent: 'space-between', fontSize: 36}}>
+                            <span style={{}}>fc following scores</span>
                             {/* percentile, rank, score */}
                             <span>rank: {fcFollowingScore[1]}</span>
                             <span>percentile: {fcFollowingScore[0]}</span>
                         </div>
                     ):null}
                     {fcEngagementScore?(
-                        <div style={{display:'flex', flexDirection:'column', width: '19%'}}>
+                        <div style={{display:'flex', flexDirection:'column', width: '19%', height: '100%', justifyContent: 'space-between', fontSize: 36}}>
                             <span>fc engagement scores</span>
                             {/* percentile, rank, score */}
                             <span>rank: {fcEngagementScore[1]}</span>
